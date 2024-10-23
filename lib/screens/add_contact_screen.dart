@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../model/contact.dart';
 import '../provider/contact_provider.dart';
+import '../provider/home_provider.dart';
 
 class AddContact extends StatefulWidget {
   const AddContact({super.key});
@@ -30,94 +31,199 @@ class _AddContactState extends State<AddContact> {
       emailController.text = contact.email ?? "";
       addressController.text = contact.address ?? "";
     }
+    if (Provider.of<HomeProvider>(context).isAndroid) {
+      return Scaffold(
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue,
+          title: const Text("Add Contact"),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(18.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your name',
+                    prefixIcon: Icon(Icons.person),
+                    labelText: 'Your Name',
+                  ),
+                  validator: (value) =>
+                  value!.isEmpty
+                      ? 'Please enter a name'
+                      : null,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: numberController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your phone number',
+                    prefixIcon: Icon(Icons.call),
+                    labelText: 'Your Phone Number',
+                  ),
+                  validator: (value) =>
+                  value!.isEmpty
+                      ? 'Please enter a phone number'
+                      : null,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your email',
+                    prefixIcon: Icon(Icons.email),
+                    labelText: 'Your Email',
+                  ),
+                  validator: (value) =>
+                  value!.isEmpty
+                      ? 'Please enter an email'
+                      : null,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: addressController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your address',
+                    prefixIcon: Icon(Icons.location_on),
+                    labelText: 'Your Address',
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Contact con = Contact(
+                        name: nameController.text,
+                        number: numberController.text,
+                        email: emailController.text,
+                        address: addressController.text,
+                      );
 
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.blue,
-        title: Text("Add Contact"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter your name',
-                  prefixIcon: Icon(Icons.person),
-                  labelText: 'Your Name',
-                ),
-                validator: (value) => value!.isEmpty ? 'Please enter a name' : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: numberController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter your phone number',
-                  prefixIcon: Icon(Icons.call),
-                  labelText: 'Your Phone Number',
-                ),
-                validator: (value) => value!.isEmpty ? 'Please enter a phone number' : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter your email',
-                  prefixIcon: Icon(Icons.email),
-                  labelText: 'Your Email',
-                ),
-                validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: addressController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter your address',
-                  prefixIcon: Icon(Icons.location_on),
-                  labelText: 'Your Address',
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Contact con = Contact(
-                      name: nameController.text,
-                      number: numberController.text,
-                      email: emailController.text,
-                      address: addressController.text,
-                    );
+                      if (editIndex == null) {
+                        Provider.of<ContactProvider>(context, listen: false)
+                            .addContact(con);
+                      } else {
+                        Provider.of<ContactProvider>(context, listen: false)
+                            .editContact(con, editIndex!);
+                      }
 
-                    if (editIndex == null) {
-                      Provider.of<ContactProvider>(context, listen: false).addContact(con);
-                    } else {
-                      Provider.of<ContactProvider>(context, listen: false).editContact(con, editIndex!);
+                      nameController.clear();
+                      numberController.clear();
+                      emailController.clear();
+                      addressController.clear();
+                      Navigator.pop(context);
                     }
-
-                    nameController.clear();
-                    numberController.clear();
-                    emailController.clear();
-                    addressController.clear();
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text(editIndex != null ? "Edit Contact" : "Add Contact"),
-              ),
-            ],
+                  },
+                  child: Text(
+                      editIndex != null ? "Edit Contact" : "Add Contact"),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
+    else{
+      return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text(editIndex != null ? "Edit Contact" : "Add Contact"),  // Use local editIndex instead of widget.editIndex
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(18.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+                  CupertinoTextFormFieldRow(
+                    controller: nameController,
+                    prefix: const Icon(CupertinoIcons.person),
+                    placeholder: 'Enter your name',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  CupertinoTextFormFieldRow(
+                    controller: numberController,
+                    keyboardType: TextInputType.number,
+                    prefix: const Icon(CupertinoIcons.phone),
+                    placeholder: 'Enter your phone number',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a phone number';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  CupertinoTextFormFieldRow(
+                    controller: emailController,
+                    prefix: const Icon(CupertinoIcons.mail),
+                    placeholder: 'Enter your email',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an email';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  CupertinoTextFormFieldRow(
+                    controller: addressController,
+                    prefix: const Icon(CupertinoIcons.location),
+                    placeholder: 'Enter your address',
+                  ),
+                  const SizedBox(height: 20),
+                  CupertinoButton.filled(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Contact con = Contact(
+                          name: nameController.text,
+                          number: numberController.text,
+                          email: emailController.text,
+                          address: addressController.text,
+                        );
+
+                        if (editIndex == null) {
+                          Provider.of<ContactProvider>(context, listen: false)
+                              .addContact(con);
+                        } else {
+                          Provider.of<ContactProvider>(context, listen: false)
+                              .editContact(con, editIndex!);
+                        }
+
+                        nameController.clear();
+                        numberController.clear();
+                        emailController.clear();
+                        addressController.clear();
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text(
+                      editIndex != null ? "Edit Contact" : "Add Contact",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

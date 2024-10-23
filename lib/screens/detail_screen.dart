@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:platform_converter/model/contact.dart';
@@ -23,78 +21,394 @@ class _DetailScreenState extends State<DetailScreen> {
     if (Provider.of<HomeProvider>(context).isAndroid) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Detail Screen"),
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          title: Text("Detail Screen", style: TextStyle(fontSize: 24)),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
+            Stack(
+                alignment: Alignment.bottomCenter, children: [
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.4,
+                decoration: BoxDecoration(color: Colors.blue.shade200),
+                child: Center(
+                  child: Text(
+                    "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * 0.20),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            String url = "sms:${contact.number}";
+                            launchUrl(Uri.parse(url));
+                          },
+                          child: Image.network(
+                            "https://downloadr2.apkmirror.com/wp-content/uploads/2022/04/61/6268f507b82d1.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("mailto:${contact.email}"));
+                          },
+                          child: Image.network(
+                            "https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("mailto:${contact.email}"));
+                          },
+                          child: Image.network(
+                            "https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                            onTap: () {
+                              Share.share(contact.number!);
+                            },
+                            child: Image.network(
+                              "https://cdn3d.iconscout.com/3d/premium/thumb/share-button-3d-icon-download-in-png-blend-fbx-gltf-file-formats--sharing-send-it-user-interface-pack-icons-4820410.png",
+                              width: MediaQuery.of(context).size.width * 0.09,
+                            ),
+                      ),
+                      ),
+                    ]),
+              ),
+            ]),
+            SizedBox(height: 20),
+            GestureDetector(
+              onLongPress: () {
+                launchUrl(Uri.parse("tel://${contact.number}"));
+              },
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          launchUrl(Uri.parse("tel://${contact.number}"));
+                        },
+                        child: Icon(
+                          Icons.call,
+                          color: Colors.green,
+                          size: MediaQuery.of(context).size.width * 0.07,
+                        )),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "+91 ${contact.number ?? " "}",
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.06),
+                        ),
+                        Text("Phone")
+                      ],
+                    ),
+                  ]),
+            ),
+            SizedBox(height: 10),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text("call logs",
+                        style: TextStyle(fontSize: 18, color: Colors.grey)),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text("Missed",
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
+                        Spacer(),
+                        Text("2024/10/22 02.31 pm",
+                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text("Called 20 min",
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
+                        Spacer(),
+                        Text("2024/9/22 04.20 pm",
+                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text("Called 4 min",
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
+                        Spacer(),
+                        Text("2024/9/21 02.00 pm",
+                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text("Called 50 sec",
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
+                        Spacer(),
+                        Text("2024/8/10 12.00 pm",
+                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text("Missed",
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
+                        Spacer(),
+                        Text("2024/7/02 05.00 pm",
+                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text("Missed,rang 14 sec",
+                            style: TextStyle(
+                              fontSize: 20,
+                            )),
+                        Spacer(),
+                        Text("2024/7/01 03.45 pm",
+                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      ],
+                    ),
+                  ]),
+            )
+          ],
+        ),
+      );
+    } else {
+      return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text("Detail Screen", style: TextStyle(fontSize: 24,color: Colors.white)),
+          backgroundColor: Colors.blue,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.4,
-                  decoration: BoxDecoration(color: Colors.blueAccent),
+                  decoration: BoxDecoration(color: Colors.blue.shade200),
                   child: Center(
                     child: Text(
                       "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
-                      style: TextStyle(color: Colors.white, fontSize: 40),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * 0.20,
+                      ),
                     ),
-                  )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("sms:${contact.number}"));
+                          },
+                          child: Image.network(
+                            "https://downloadr2.apkmirror.com/wp-content/uploads/2022/04/61/6268f507b82d1.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("https://wa.me/${contact.number}"));
+                            },
+                          child: Image.network(
+                            "https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("mailto:${contact.email}"));
+                          },
+                          child: Image.network(
+                            "https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.06,
+                        backgroundColor: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            Share.share(contact.number!);
+                          },
+                          child: Image.network(
+                            "https://cdn3d.iconscout.com/3d/premium/thumb/share-button-3d-icon-download-in-png-blend-fbx-gltf-file-formats--sharing-send-it-user-interface-pack-icons-4820410.png",
+                            width: MediaQuery.of(context).size.width * 0.09,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Row(
+            SizedBox(height: 20),
+            GestureDetector(
+              onLongPress: () {
+                launchUrl(Uri.parse("tel://${contact.number}"));
+              },
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                      onTap: () {
-                        launchUrl(Uri.parse("tel://${contact.number}"));
-                      },
-                      child: Icon(
-                        Icons.call,
-                        color: Colors.green,
-                        size: MediaQuery.of(context).size.width * 0.07,
-                      )),
+                    onTap: () {
+                      launchUrl(Uri.parse("tel://${contact.number}"));
+                    },
+                    child: Icon(
+                      CupertinoIcons.phone,
+                      color: Colors.green,
+                      size: MediaQuery.of(context).size.width * 0.07,
+                    ),
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "+91 ${contact.number ?? " "}",
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.06),
+                        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color: Colors.black),
                       ),
-                      Text("Phone")
+                      Text("Phone", style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, color: Colors.grey)),
                     ],
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        Share.share(contact.number!);
-                      },
-                      child: Icon(
-                        Icons.share,
-                        color: Colors.black54,
-                        size: MediaQuery.of(context).size.width * 0.07,
-                      )),
-                  GestureDetector(
-                      onTap: () {
-                        launchUrl(Uri.parse("mailto:${contact.email}"));
-                      },
-                      child:  Image.network("https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png",
-                        width: MediaQuery.of(context).size.width * 0.07,),),
-                  GestureDetector(
-                      onTap: () {
-                        launchUrl(Uri.parse("mailto:${contact.email}"));
-                      },
-                      child: Image.network("https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png",
-                          width: MediaQuery.of(context).size.width * 0.07,),
-                  )
-                ]),
+                ],
+              ),
+            ),
             SizedBox(height: 10),
-            Divider()
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Call Logs", style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text("Missed", style: TextStyle(fontSize: 17,color: Colors.black)),
+                      Spacer(),
+                      Text("2024/10/22 02.31 pm", style: TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Called 20 min", style: TextStyle(fontSize: 17,color: Colors.black)),
+                      Spacer(),
+                      Text("2024/9/22 04.20 pm", style: TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Called 4 min", style: TextStyle(fontSize: 17,color: Colors.black)),
+                      Spacer(),
+                      Text("2024/9/21 02.00 pm", style: TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Called 50 sec", style: TextStyle(fontSize: 17,color: Colors.black)),
+                      Spacer(),
+                      Text("2024/8/10 12.00 pm", style: TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Missed", style: TextStyle(fontSize: 17,color: Colors.black)),
+                      Spacer(),
+                      Text("2024/7/02 05.00 pm", style: TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Missed, rang 14 sec", style: TextStyle(fontSize: 17,color: Colors.black)),
+                      Spacer(),
+                      Text("2024/7/01 03.45 pm", style: TextStyle(fontSize: 15, color: Colors.grey)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       );
-    } else {
-      return CupertinoPageScaffold(child: Center(child: Text("Detail Screen")));
     }
   }
-}
+    }
