@@ -127,7 +127,7 @@ class _IosMissedCallPageState extends State<IosMissedCallPage> {
           actions: [
             CupertinoDialogAction(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text("Cancel"),
             ),
