@@ -21,25 +21,25 @@ class _HomeScreenState extends State<HomeScreen> {
         .of<HomeProvider>(context)
         .isAndroid) {
       return Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.blue,
-          title: const Text("Contact App"),
-          centerTitle: true,
-          actions: [
-            Consumer<HomeProvider>(
-              builder: (context, homeProvider, child) {
-                return Switch(
-                  activeColor: Colors.white,
-                  value: homeProvider.isAndroid,
-                  onChanged: (value) {
-                    homeProvider.change(); // Toggle between Android and iOS
-                  },
-                );
-              },
-            )
-          ],
-        ),
+        // appBar: AppBar(
+        //   foregroundColor: Colors.white,
+        //   backgroundColor: Colors.blue,
+        //   title: const Text("Contact App"),
+        //   centerTitle: true,
+          // actions: [
+          //   Consumer<HomeProvider>(
+          //     builder: (context, homeProvider, child) {
+          //       return Switch(
+          //         activeColor: Colors.white,
+          //         value: homeProvider.isAndroid,
+          //         onChanged: (value) {
+          //           homeProvider.change(); // Toggle between Android and iOS
+          //         },
+          //       );
+          //     },
+          //   )
+          // ],
+        // ),
         bottomNavigationBar: Consumer<HomeProvider>(
           builder: (context, homeProvider, child) {
             return BottomNavigationBar(
@@ -61,81 +61,60 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         body:
-        SafeArea(
-          child: Consumer<HomeProvider>(
-            builder: (context, homeProvider, child) {
-              // Switch between different pages based on selected index
-              switch (homeProvider.menuIndex) {
-                case 0:
-                  return HomePage(); // Display Home Page
-                case 1:
-                  return MissedCallPage();
-                default:
-                  return HomePage();
-              }
-            },
-          ),
+        Consumer<HomeProvider>(
+          builder: (context, homeProvider, child) {
+            // Switch between different pages based on selected index
+            switch (homeProvider.menuIndex) {
+              case 0:
+                return HomePage(); // Display Home Page
+              case 1:
+                return MissedCallPage();
+              default:
+                return HomePage();
+            }
+          },
         ),
 
       );
     } else {
       return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          backgroundColor: Colors.blue,
-          middle: const Text(
-            "Contact App",
-            style: TextStyle(color: Colors.white),
-          ),
-          trailing: Consumer<HomeProvider>(
-            builder: (context, homeProvider, child) {
-              return CupertinoSwitch(
-                value: homeProvider.isAndroid,
-                onChanged: (value) {
-                  homeProvider.change(); // Toggle between Android and iOS
+        child: Column(
+          children: [
+            Expanded(
+              child: Consumer<HomeProvider>(
+                builder: (context, homeProvider, child) {
+                  // Switch between different pages based on selected index
+                  switch (homeProvider.menuIndex) {
+                    case 0:
+                      return const IosHomePage(); // Display Home Page
+                    case 1:
+                      return const IosMissedCallPage(); // Display Add Contact Page
+                    default:
+                      return const IosHomePage();
+                  }
                 },
-              );
-            },
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: Consumer<HomeProvider>(
-                  builder: (context, homeProvider, child) {
-                    // Switch between different pages based on selected index
-                    switch (homeProvider.menuIndex) {
-                      case 0:
-                        return const IosHomePage(); // Display Home Page
-                      case 1:
-                        return const IosMissedCallPage(); // Display Add Contact Page
-                      default:
-                        return const IosHomePage();
-                    }
-                  },
+              ),
+            ),
+            CupertinoTabBar(
+              currentIndex: Provider
+                  .of<HomeProvider>(context)
+                  .menuIndex,
+              onTap: (index) {
+                Provider.of<HomeProvider>(context, listen: false)
+                    .changeMenuIndex(index);
+              },
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.home),
+                  label: "Home",
                 ),
-              ),
-              CupertinoTabBar(
-                currentIndex: Provider
-                    .of<HomeProvider>(context)
-                    .menuIndex,
-                onTap: (index) {
-                  Provider.of<HomeProvider>(context, listen: false)
-                      .changeMenuIndex(index);
-                },
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.home),
-                    label: "Home",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.phone),
-                    label: "Missed Calls",
-                  ),
-                ],
-              ),
-            ],
-          ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.phone),
+                  label: "Missed Calls",
+                ),
+              ],
+            ),
+          ],
         ),
       );
     }

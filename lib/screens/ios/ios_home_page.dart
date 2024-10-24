@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/contact.dart';
 import '../../provider/contact_provider.dart';
+import '../../provider/home_provider.dart';
 
 class IosHomePage extends StatefulWidget {
   const IosHomePage({super.key});
@@ -14,161 +15,240 @@ class IosHomePage extends StatefulWidget {
 }
 
 class _IosHomePageState extends State<IosHomePage> {
+  TextEditingController _searchController = TextEditingController();
+  List<Contact> _filteredContacts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_filterContacts);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterContacts() {
+    final provider = Provider.of<ContactProvider>(context, listen: false);
+    String query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredContacts = provider.contactList.where((contact) {
+        return contact.name?.toLowerCase().contains(query) ?? false;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child: SafeArea(
-        child: Consumer<ContactProvider>(
-          builder:
-              (BuildContext context, ContactProvider value, Widget? child) {
-            if (value.contactList.isEmpty) {
-              return const Center(
-                child: Text(
-                  "No Contacts",
-                  style: TextStyle(fontSize: 50),
-                ),
-              );
-            }
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  ListView.builder(
-                    itemCount: value.contactList.length,
-                    itemBuilder: (context, index) {
-                      Contact contact = value.contactList[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade50,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.blue.withOpacity(0.2),
-                                blurRadius: 4,
-                                spreadRadius: 1,
-                              ),
-                            ],
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              launchUrl(Uri.parse("tel://${contact.number}"));
-                            },
-                            onLongPress: () {
-                              _showDeleteConfirmation(context, index);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: Colors.blueAccent,
-                                    child: Text(
-                                      "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
+      backgroundColor: CupertinoColors.systemGroupedBackground,
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text(
+          "Contact App",
+          style: TextStyle(color: CupertinoColors.white, fontSize: 24),
+        ),
+        backgroundColor: CupertinoColors.activeBlue,
+        trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            Provider.of<HomeProvider>(context, listen: false).change();
+          },
+          child: Column(
+            children: const [
+              Icon(
+                CupertinoIcons.arrow_right_arrow_left_square_fill,
+                color: CupertinoColors.white,
+                size: 25,
+              ),
+              Text(
+                "iOS Mode",
+                style: TextStyle(color: CupertinoColors.white, fontSize: 15),
+              ),
+            ],
+          ),
+        ),
+      ),
+      child: Consumer<ContactProvider>(
+        builder: (BuildContext context, ContactProvider value, Widget? child) {
+          List<Contact> contactsToDisplay = _searchController.text.isEmpty
+              ? value.contactList
+              : _filteredContacts;
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    CupertinoTextField(
+                      controller: _searchController,
+                      placeholder: 'Search Contacts',
+                      prefix: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Icon(CupertinoIcons.search),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: contactsToDisplay.length,
+                        itemBuilder: (context, index) {
+                          Contact contact = contactsToDisplay[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                launchUrl(Uri.parse("tel://${contact.number}"));
+                              },
+                              onLongPress: () {
+                                _showDeleteConfirmation(context, index);
+                              },
+                              child: CupertinoButton(
+                                onPressed: () {
+                                  launchUrl(Uri.parse("tel://${contact.number}"));
+                                },
+                                padding: EdgeInsets.zero,
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: CupertinoColors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: CupertinoColors.systemGrey.withOpacity(0.4),
+                                        blurRadius: 6,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          contact.name ?? "",
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: CupertinoColors.activeBlue,
+                                        child: Text(
+                                          "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
+                                          style: const TextStyle(color: CupertinoColors.white),
                                         ),
-                                        Text(
-                                          contact.number ?? "",
-                                          style: const TextStyle(
-                                              color: Colors.grey, fontSize: 16),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              contact.name ?? "",
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: CupertinoColors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              contact.number ?? "",
+                                              style: const TextStyle(
+                                                color: CupertinoColors.systemGrey,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      CupertinoButton(
+                                        padding: EdgeInsets.zero,
+                                        child: const Icon(CupertinoIcons.pencil, color: CupertinoColors.activeBlue),
+                                        onPressed: () {
+                                          Navigator.pushNamed(context, "AddContact", arguments: index);
+                                        },
+                                      ),
+                                      CupertinoButton(
+                                        padding: EdgeInsets.zero,
+                                        child: const Icon(CupertinoIcons.info, color: CupertinoColors.systemGrey),
+                                        onPressed: () {
+                                          Navigator.of(context).pushNamed("DetailScreen", arguments: contact);
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    child: const Icon(CupertinoIcons.pencil,
-                                        color: Colors.blue),
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, "AddContact",
-                                          arguments: index);
-                                    },
-                                  ),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    child: const Icon(CupertinoIcons.info),
-                                    onPressed: () {
-                                      Navigator.of(context).pushNamed(
-                                          "DetailScreen",
-                                          arguments: contact);
-                                    },
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  bottom: 5.0,
+                  right: 5.0,
+                  child: CupertinoButton(
+                    color: CupertinoColors.activeBlue,
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: const Icon(CupertinoIcons.add, color: CupertinoColors.white),
+                    onPressed: () {
+                      Navigator.pushNamed(context, "AddContact");
                     },
                   ),
-                  // Floating Action Button
-                  Positioned(
-                    bottom: 5.0,
-                    right: 5.0,
-                    child: CupertinoButton(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10.0),
-                      child:
-                          const Icon(CupertinoIcons.add, color: Colors.white),
-                      onPressed: () {
-                        Navigator.pushNamed(context, "AddContact");
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
-}
 
-void _showDeleteConfirmation(BuildContext context, int index) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("Delete Contact"),
-        content: const Text("Are you sure you want to delete this contact?"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              Provider.of<ContactProvider>(context, listen: false)
-                  .removeContact(index);
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Contact deleted")),
-              );
-            },
-            child: const Text("Delete"),
-          ),
-        ],
-      );
-    },
-  );
+  void _showDeleteConfirmation(BuildContext context, int index) {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text("Delete Contact"),
+          content: const Text("Are you sure you want to delete this contact?"),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Provider.of<ContactProvider>(context, listen: false).removeContact(index);
+                Navigator.of(context).pop();
+                _showContactDeletedMessage(context); // Show a confirmation
+              },
+              isDestructiveAction: true,
+              child: const Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showContactDeletedMessage(BuildContext context) {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text("Contact Deleted"),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

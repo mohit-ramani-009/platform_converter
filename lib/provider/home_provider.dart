@@ -5,15 +5,15 @@ class HomeProvider extends ChangeNotifier {
   bool isAndroid = Platform.isAndroid;
   int _menuIndex = 0;  // Track selected index
 
-  int get menuIndex => _menuIndex;  // Getter for menuIndex
+  int get menuIndex => _menuIndex;
 
   void change() {
-    isAndroid = !isAndroid;  // Toggle between Android and iOS
+    isAndroid = !isAndroid;
     notifyListeners();
   }
 
   void changeMenuIndex(int index) {
-    _menuIndex = index;  // Update the selected index
+    _menuIndex = index;
     notifyListeners();
   }
 }
