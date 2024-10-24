@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 class HomeProvider extends ChangeNotifier {
   bool isAndroid = Platform.isAndroid;
-  int _menuIndex = 0;  // Track selected index
+  int _menuIndex = 0; 
 
   int get menuIndex => _menuIndex;
 
