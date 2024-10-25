@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../model/contact.dart';
-import '../provider/contact_provider.dart';
-import '../provider/home_provider.dart';
+import '../../../model/contact.dart';
+import '../../../provider/contact_provider.dart';
+import '../../../provider/home_provider.dart';
 
 class AddContact extends StatefulWidget {
   const AddContact({super.key});

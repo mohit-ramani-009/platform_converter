@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:platform_converter/provider/contact_provider.dart';
 import 'package:platform_converter/provider/home_provider.dart';
 import 'package:platform_converter/provider/theme_provider.dart';
-import 'package:platform_converter/screens/add_contact_screen.dart';
-import 'package:platform_converter/screens/detail_screen.dart';
-import 'package:platform_converter/screens/home_screen.dart';
-import 'package:platform_converter/screens/theme_screen.dart';
+import 'package:platform_converter/screens/ios/views/add_contact_screen.dart';
+import 'package:platform_converter/screens/ios/views/detail_screen.dart';
+import 'package:platform_converter/screens/ios/views/home_screen.dart';
+import 'package:platform_converter/screens/ios/views/splash_screen.dart';
+import 'package:platform_converter/screens/ios/views/theme_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -27,6 +28,8 @@ class MyApp extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: 'SplashScreen',
+
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeProvider.getThemeMode() == ThemeMode.system
@@ -36,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomeScreen(),
         'AddContact': (context) => AddContact(),
         'DetailScreen': (context) => DetailScreen(),
+        'SplashScreen': (context) => SplashScreen(),
       },
     );
   }

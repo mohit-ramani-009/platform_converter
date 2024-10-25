@@ -53,12 +53,11 @@ class _IosMissedCallPageState extends State<IosMissedCallPage> {
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: CupertinoColors.systemRed.withOpacity(0.1),
+                        color: CupertinoColors.white.withOpacity(0.001),
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
                             color: CupertinoColors.systemGrey.withOpacity(0.2),
-                            blurRadius: 6,
                             offset: const Offset(0, 3),
                           ),
                         ],

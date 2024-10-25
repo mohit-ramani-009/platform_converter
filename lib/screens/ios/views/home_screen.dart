@@ -4,8 +4,8 @@ import 'package:platform_converter/provider/home_provider.dart';
 import 'package:platform_converter/screens/ios/ios_home_page.dart';
 import 'package:platform_converter/screens/ios/ios_missed_call_page.dart';
 import 'package:provider/provider.dart';
-import 'android/home_page.dart';
-import 'android/missed_call_page.dart';
+import '../../android/home_page.dart';
+import '../../android/missed_call_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -110,7 +110,8 @@ class _IosHomePageState extends State<IosHomePage> {
                               },
                               child: CupertinoButton(
                                 onPressed: () {
-                                  launchUrl(Uri.parse("tel://${contact.number}"));
+                                  launchUrl(
+                                      Uri.parse("tel://${contact.number}"));
                                 },
                                 padding: EdgeInsets.zero,
                                 child: Card(
@@ -119,16 +120,19 @@ class _IosHomePageState extends State<IosHomePage> {
                                     child: Row(
                                       children: [
                                         CircleAvatar(
-                                          backgroundColor: CupertinoColors.activeBlue,
+                                          backgroundColor:
+                                              CupertinoColors.activeBlue,
                                           child: Text(
                                             "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
-                                            style: const TextStyle(color: CupertinoColors.white),
+                                            style: const TextStyle(
+                                                color: CupertinoColors.white),
                                           ),
                                         ),
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 contact.name ?? "",
@@ -140,7 +144,8 @@ class _IosHomePageState extends State<IosHomePage> {
                                               Text(
                                                 contact.number ?? "",
                                                 style: const TextStyle(
-                                                  color: CupertinoColors.systemGrey,
+                                                  color: CupertinoColors
+                                                      .systemGrey,
                                                   fontSize: 16,
                                                 ),
                                               ),
@@ -149,16 +154,25 @@ class _IosHomePageState extends State<IosHomePage> {
                                         ),
                                         CupertinoButton(
                                           padding: EdgeInsets.zero,
-                                          child: const Icon(CupertinoIcons.pencil, color: CupertinoColors.activeBlue),
+                                          child: const Icon(
+                                              CupertinoIcons.pencil,
+                                              color:
+                                                  CupertinoColors.activeBlue),
                                           onPressed: () {
-                                            Navigator.pushNamed(context, "AddContact", arguments: index);
+                                            Navigator.pushNamed(
+                                                context, "AddContact",
+                                                arguments: index);
                                           },
                                         ),
                                         CupertinoButton(
                                           padding: EdgeInsets.zero,
-                                          child: const Icon(CupertinoIcons.info, color: CupertinoColors.systemGrey),
+                                          child: const Icon(CupertinoIcons.info,
+                                              color:
+                                                  CupertinoColors.systemGrey),
                                           onPressed: () {
-                                            Navigator.of(context).pushNamed("DetailScreen", arguments: contact);
+                                            Navigator.of(context).pushNamed(
+                                                "DetailScreen",
+                                                arguments: contact);
                                           },
                                         ),
                                       ],
@@ -179,7 +193,8 @@ class _IosHomePageState extends State<IosHomePage> {
                   child: CupertinoButton(
                     color: CupertinoColors.activeBlue,
                     borderRadius: BorderRadius.circular(30.0),
-                    child: const Icon(CupertinoIcons.add, color: CupertinoColors.white),
+                    child: const Icon(CupertinoIcons.add,
+                        color: CupertinoColors.white),
                     onPressed: () {
                       Navigator.pushNamed(context, "AddContact");
                     },
@@ -203,15 +218,16 @@ class _IosHomePageState extends State<IosHomePage> {
           actions: [
             CupertinoDialogAction(
               onPressed: () {
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop();
               },
               child: const Text("Cancel"),
             ),
             CupertinoDialogAction(
               onPressed: () {
-                Provider.of<ContactProvider>(context, listen: false).removeContact(index);
+                Provider.of<ContactProvider>(context, listen: false)
+                    .removeContact(index);
                 Navigator.of(context).pop();
-                _showContactDeletedMessage(context); 
+                _showContactDeletedMessage(context);
               },
               isDestructiveAction: true,
               child: const Text("Delete"),
