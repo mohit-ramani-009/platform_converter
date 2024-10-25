@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:platform_converter/provider/contact_provider.dart';
 import 'package:platform_converter/provider/home_provider.dart';
 import 'package:platform_converter/provider/theme_provider.dart';
-import 'package:platform_converter/screens/ios/views/add_contact_screen.dart';
-import 'package:platform_converter/screens/ios/views/detail_screen.dart';
+import 'package:platform_converter/screens/views/add_contact_screen.dart';
+import 'package:platform_converter/screens/views/detail_screen.dart';
 import 'package:platform_converter/screens/ios/views/home_screen.dart';
 import 'package:platform_converter/screens/ios/views/splash_screen.dart';
-import 'package:platform_converter/screens/ios/views/theme_screen.dart';
+import 'package:platform_converter/screens/views/theme_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {

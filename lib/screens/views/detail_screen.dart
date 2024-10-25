@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../provider/home_provider.dart';
+import '../../provider/home_provider.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({super.key});
