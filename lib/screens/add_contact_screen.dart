@@ -37,7 +37,7 @@ class _AddContactState extends State<AddContact> {
         appBar: AppBar(
           foregroundColor: Colors.white,
           backgroundColor: Color(0xFF0078FB),
-          title: const Text("Add Contact"),
+          title: Text(editIndex != null ? "Edit Contact" : "Add Contact",style: const TextStyle(fontSize: 24, color: CupertinoColors.white),),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -146,8 +146,8 @@ class _AddContactState extends State<AddContact> {
                   CupertinoTextFormFieldRow(
                     controller: nameController,
                     prefix: const Icon(CupertinoIcons.person,
-                        color: CupertinoColors.systemGrey),
-                    placeholder: 'Enter your name',
+                        color: CupertinoColors.white),
+                    placeholder: 'Enter your name',style :TextStyle(color: CupertinoColors.white),
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -161,8 +161,8 @@ class _AddContactState extends State<AddContact> {
                     controller: numberController,
                     keyboardType: TextInputType.phone,
                     prefix: const Icon(CupertinoIcons.phone,
-                        color: CupertinoColors.systemGrey),
-                    placeholder: 'Enter your phone number',
+                        color: CupertinoColors.white),
+                    placeholder: 'Enter your phone number',style :TextStyle(color: CupertinoColors.white),
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -176,8 +176,8 @@ class _AddContactState extends State<AddContact> {
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     prefix: const Icon(CupertinoIcons.mail,
-                        color: CupertinoColors.systemGrey),
-                    placeholder: 'Enter your email',
+                        color: CupertinoColors.white),
+                    placeholder: 'Enter your email',style :TextStyle(color: CupertinoColors.white),
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -190,8 +190,8 @@ class _AddContactState extends State<AddContact> {
                   CupertinoTextFormFieldRow(
                     controller: addressController,
                     prefix: const Icon(CupertinoIcons.location,
-                        color: CupertinoColors.systemGrey),
-                    placeholder: 'Enter your address',
+                        color: CupertinoColors.white),
+                    placeholder: 'Enter your address',style:  TextStyle(color: CupertinoColors.white),
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                   ),
                   const SizedBox(height: 24),

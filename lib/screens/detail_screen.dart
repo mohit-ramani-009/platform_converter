@@ -68,7 +68,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         backgroundColor: Colors.white,
                         child: GestureDetector(
                           onTap: () {
-                            launchUrl(Uri.parse("https://wa.me/${contact.number}  "));},
+                            launchUrl(
+                                Uri.parse("https://wa.me/${contact.number}  "));
+                          },
                           child: Image.network(
                             "https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png",
                             width: MediaQuery.of(context).size.width * 0.09,
@@ -247,7 +249,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   child: Center(
                     child: Text(
                       "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
-                      style: TextStyle(decoration: TextDecoration.none,
+                      style: TextStyle(
+                        decoration: TextDecoration.none,
                         color: CupertinoColors.white,
                         fontSize: MediaQuery.of(context).size.width * 0.2,
                       ),
@@ -275,7 +278,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         backgroundColor: CupertinoColors.white,
                         child: GestureDetector(
                           onTap: () {
-                            launchUrl(Uri.parse("https://wa.me/${contact.number}  "));},
+                            launchUrl(
+                                Uri.parse("https://wa.me/${contact.number}  "));
+                          },
                           child: Icon(CupertinoIcons.phone_circle,
                               color: CupertinoColors.activeGreen, size: 30),
                         ),
@@ -330,13 +335,15 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: [
                       Text(
                         "+91 ${contact.number ?? ' '}",
-                        style: TextStyle(decoration: TextDecoration.none,
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
                             fontSize: MediaQuery.of(context).size.width * 0.06,
-                            color: CupertinoColors.black),
+                            color: CupertinoColors.white),
                       ),
                       Text(
                         "Phone",
-                        style: TextStyle(decoration: TextDecoration.none,
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             color: CupertinoColors.systemGrey),
                       ),
@@ -353,8 +360,10 @@ class _DetailScreenState extends State<DetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Call Logs",
-                      style: TextStyle(decoration: TextDecoration.none,
-                          fontSize: 18, color: CupertinoColors.systemGrey)),
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontSize: 18,
+                          color: CupertinoColors.systemGrey)),
                   const SizedBox(height: 10),
                   // Inline call logs
                   Padding(
@@ -362,11 +371,14 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       children: [
                         const Text("Missed",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 17, color: CupertinoColors.black)),
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 17,
+                                color: CupertinoColors.white)),
                         const Spacer(),
                         const Text("2024/10/22 02:31 PM",
-                            style: TextStyle(decoration: TextDecoration.none,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
                                 fontSize: 15,
                                 color: CupertinoColors.systemGrey)),
                       ],
@@ -377,11 +389,14 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       children: [
                         const Text("Called 20 min",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 17, color: CupertinoColors.black)),
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 17,
+                                color: CupertinoColors.white)),
                         const Spacer(),
                         const Text("2024/09/22 04:20 PM",
-                            style: TextStyle(decoration: TextDecoration.none,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
                                 fontSize: 15,
                                 color: CupertinoColors.systemGrey)),
                       ],
@@ -392,11 +407,14 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       children: [
                         const Text("Called 4 min",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 17, color: CupertinoColors.black)),
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 17,
+                                color: CupertinoColors.white)),
                         const Spacer(),
                         const Text("2024/09/21 02:00 PM",
-                            style: TextStyle(decoration: TextDecoration.none,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
                                 fontSize: 15,
                                 color: CupertinoColors.systemGrey)),
                       ],
@@ -407,11 +425,14 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       children: [
                         const Text("Called 50 sec",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 17, color: CupertinoColors.black)),
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 17,
+                                color: CupertinoColors.white)),
                         const Spacer(),
                         const Text("2024/08/10 12:00 PM",
-                            style: TextStyle(decoration: TextDecoration.none,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
                                 fontSize: 15,
                                 color: CupertinoColors.systemGrey)),
                       ],
@@ -422,11 +443,14 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Row(
                       children: [
                         const Text("Missed",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 17, color: CupertinoColors.black)),
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 17,
+                                color: CupertinoColors.white)),
                         const Spacer(),
                         const Text("2024/07/02 05:00 PM",
-                            style: TextStyle(decoration: TextDecoration.none,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
                                 fontSize: 15,
                                 color: CupertinoColors.systemGrey)),
                       ],
@@ -438,11 +462,13 @@ class _DetailScreenState extends State<DetailScreen> {
                       children: [
                         const Text("Missed, rang 14 sec",
                             style: TextStyle(
-                              decoration: TextDecoration.none,
-                                fontSize: 17, color: CupertinoColors.black)),
+                                decoration: TextDecoration.none,
+                                fontSize: 17,
+                                color: CupertinoColors.white)),
                         const Spacer(),
                         const Text("2024/07/01 03:45 PM",
-                            style: TextStyle(decoration: TextDecoration.none,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
                                 fontSize: 15,
                                 color: CupertinoColors.systemGrey)),
                       ],

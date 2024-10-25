@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../model/contact.dart';
 import '../../provider/contact_provider.dart';
-import '../../provider/home_provider.dart';
 
 class MissedCallPage extends StatefulWidget {
   const MissedCallPage({super.key});
@@ -19,11 +17,10 @@ class _MissedCallPageState extends State<MissedCallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          foregroundColor: Colors.white,
-          centerTitle: true,
-          backgroundColor: Color(0xFF0078FB)
-,
-          title: const Text("Contact App"),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        backgroundColor: Color(0xFF0078FB),
+        title: const Text("Contact App"),
       ),
       body: Consumer<ContactProvider>(
         builder: (BuildContext context, ContactProvider value, Widget? child) {
@@ -71,7 +68,8 @@ class _MissedCallPageState extends State<MissedCallPage> {
                     ),
                     trailing: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed("DetailScreen", arguments: contact);
+                        Navigator.of(context)
+                            .pushNamed("DetailScreen", arguments: contact);
                       },
                       child: const Icon(Icons.info_outline_rounded),
                     ),
@@ -102,7 +100,8 @@ void _showDeleteConfirmation(BuildContext context, int index) {
           ),
           TextButton(
             onPressed: () {
-              Provider.of<ContactProvider>(context, listen: false).removeContact(index);
+              Provider.of<ContactProvider>(context, listen: false)
+                  .removeContact(index);
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Contact deleted")),
@@ -115,4 +114,3 @@ void _showDeleteConfirmation(BuildContext context, int index) {
     },
   );
 }
-

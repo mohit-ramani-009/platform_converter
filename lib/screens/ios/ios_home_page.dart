@@ -90,6 +90,7 @@ class _IosHomePageState extends State<IosHomePage> {
                           child: Icon(CupertinoIcons.search),
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        style: TextStyle(color: CupertinoColors.white),
                       ),
                     ),
                     const SizedBox(height: 10),
