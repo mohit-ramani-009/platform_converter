@@ -63,10 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
         body:
         Consumer<HomeProvider>(
           builder: (context, homeProvider, child) {
-            // Switch between different pages based on selected index
             switch (homeProvider.menuIndex) {
               case 0:
-                return HomePage(); // Display Home Page
+                return HomePage(); 
               case 1:
                 return MissedCallPage();
               default:
@@ -83,12 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: Consumer<HomeProvider>(
                 builder: (context, homeProvider, child) {
-                  // Switch between different pages based on selected index
                   switch (homeProvider.menuIndex) {
                     case 0:
-                      return const IosHomePage(); // Display Home Page
+                      return const IosHomePage(); 
                     case 1:
-                      return const IosMissedCallPage(); // Display Add Contact Page
+                      return const IosMissedCallPage(); 
                     default:
                       return const IosHomePage();
                   }

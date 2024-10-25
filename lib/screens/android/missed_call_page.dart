@@ -96,7 +96,7 @@ void _showDeleteConfirmation(BuildContext context, int index) {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
+              Navigator.of(context).pop();
             },
             child: const Text("Cancel"),
           ),

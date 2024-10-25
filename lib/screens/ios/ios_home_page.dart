@@ -202,7 +202,7 @@ class _IosHomePageState extends State<IosHomePage> {
           actions: [
             CupertinoDialogAction(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); 
               },
               child: const Text("Cancel"),
             ),
@@ -210,7 +210,7 @@ class _IosHomePageState extends State<IosHomePage> {
               onPressed: () {
                 Provider.of<ContactProvider>(context, listen: false).removeContact(index);
                 Navigator.of(context).pop();
-                _showContactDeletedMessage(context); // Show a confirmation
+                _showContactDeletedMessage(context); 
               },
               isDestructiveAction: true,
               child: const Text("Delete"),

@@ -203,7 +203,6 @@ class _AddContactState extends State<AddContact> {
                             horizontal: 50, vertical: 15),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // Create or update the contact based on the index
                             Contact con = Contact(
                               name: nameController.text,
                               number: numberController.text,
@@ -220,8 +219,7 @@ class _AddContactState extends State<AddContact> {
                                       listen: false)
                                   .editContact(con, editIndex!);
                             }
-
-                            // Clear the text fields
+                            
                             nameController.clear();
                             numberController.clear();
                             emailController.clear();
