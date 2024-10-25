@@ -81,17 +81,15 @@ class _IosHomePageState extends State<IosHomePage> {
               children: [
                 Column(
                   children: [
-                    CupertinoTextField(
-                      controller: _searchController,
-                      placeholder: 'Search Contacts',
-                      prefix: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Icon(CupertinoIcons.search),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.white,
-                        borderRadius: BorderRadius.circular(8.0),
+                    Card(
+                      child: CupertinoTextField(
+                        controller: _searchController,
+                        placeholder: 'Search Contacts',
+                        prefix: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(CupertinoIcons.search),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -114,66 +112,56 @@ class _IosHomePageState extends State<IosHomePage> {
                                   launchUrl(Uri.parse("tel://${contact.number}"));
                                 },
                                 padding: EdgeInsets.zero,
-                                child: Container(
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    color: CupertinoColors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: CupertinoColors.systemGrey.withOpacity(0.4),
-                                        blurRadius: 6,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: CupertinoColors.activeBlue,
-                                        child: Text(
-                                          "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
-                                          style: const TextStyle(color: CupertinoColors.white),
+                                child: Card(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: CupertinoColors.activeBlue,
+                                          child: Text(
+                                            "${contact.name?.isNotEmpty == true ? contact.name![0].toUpperCase() : '?'}",
+                                            style: const TextStyle(color: CupertinoColors.white),
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              contact.name ?? "",
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: CupertinoColors.black,
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                contact.name ?? "",
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              contact.number ?? "",
-                                              style: const TextStyle(
-                                                color: CupertinoColors.systemGrey,
-                                                fontSize: 16,
+                                              Text(
+                                                contact.number ?? "",
+                                                style: const TextStyle(
+                                                  color: CupertinoColors.systemGrey,
+                                                  fontSize: 16,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      CupertinoButton(
-                                        padding: EdgeInsets.zero,
-                                        child: const Icon(CupertinoIcons.pencil, color: CupertinoColors.activeBlue),
-                                        onPressed: () {
-                                          Navigator.pushNamed(context, "AddContact", arguments: index);
-                                        },
-                                      ),
-                                      CupertinoButton(
-                                        padding: EdgeInsets.zero,
-                                        child: const Icon(CupertinoIcons.info, color: CupertinoColors.systemGrey),
-                                        onPressed: () {
-                                          Navigator.of(context).pushNamed("DetailScreen", arguments: contact);
-                                        },
-                                      ),
-                                    ],
+                                        CupertinoButton(
+                                          padding: EdgeInsets.zero,
+                                          child: const Icon(CupertinoIcons.pencil, color: CupertinoColors.activeBlue),
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, "AddContact", arguments: index);
+                                          },
+                                        ),
+                                        CupertinoButton(
+                                          padding: EdgeInsets.zero,
+                                          child: const Icon(CupertinoIcons.info, color: CupertinoColors.systemGrey),
+                                          onPressed: () {
+                                            Navigator.of(context).pushNamed("DetailScreen", arguments: contact);
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

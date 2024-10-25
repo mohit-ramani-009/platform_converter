@@ -18,8 +18,6 @@ class _MissedCallPageState extends State<MissedCallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100
-,
       appBar: AppBar(
           foregroundColor: Colors.white,
           centerTitle: true,
@@ -44,8 +42,6 @@ class _MissedCallPageState extends State<MissedCallPage> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
-                  shadowColor: Colors.red,
-                  color: Colors.red.shade50,
                   elevation: 5,
                   child: ListTile(
                     onTap: () {

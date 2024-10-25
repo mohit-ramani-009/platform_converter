@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, "AddContact");
